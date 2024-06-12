@@ -1,0 +1,98 @@
+{% extends 'base.html' %} {% block title %} Экспозиция {% endblock %} {% block
+main %}
+{{ ckeditor.load() }}
+<div class="container">
+  <main class="my-3">
+    <ol class="breadcrumb py-3">
+      <li class="breadcrumb-item"><a href="/">Главная</a></li>
+      <li class="breadcrumb-item active">Экспозиция</li>
+    </ol>
+    
+    {%if 'name' in session and active_user.root==1%}
+    <button
+      type="button"
+      class="btn btn-primary mb-3"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
+      Добавить запись
+    </button>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Добавить запись</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="post" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label for="disabledTextInput" class="form-label">Название</label>
+                <input type="text" id="disabledTextInput" class="form-control" name="title" placeholder="Название"
+                  required>
+              </div>
+        
+              <div class="mb-3">
+                <label for="disabledTextInput" class="form-label">Изображение</label>
+                <input type="file" id="disabledTextInput" name="image" class="form-control" accept=".jpg,.jpeg,.png"
+                  required>
+              </div>
+              <div class="mb-3">
+                <h3>Содержимое</h3>
+                {{ ckeditor.create() }}
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            <button type="submit" class="btn btn-primary">Добавить запись</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    {%endif%}
+
+    <div class="bs-component" bis_skin_checked="1">
+      <div class="alert alert-dismissible alert-primary" bis_skin_checked="1">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+        ></button>
+        <h4 class="alert-heading"></h4>
+        <p class="mb-1">
+          Музей Карельского фронта находится в одном из первых кирпичных зданий
+          города Беломорска. Оно построено в конце 1930-х годов для
+          железнодорожной школы. С 1941 года по ноябрь 1944 года в нём
+          располагался штаб Карельского фронта.
+        </p>
+        <p class="mb-0">
+          Основная экспозиция музея размещается на втором этаже. Она выстроена
+          по географическому принципу, и рассказывает о событиях и об
+          особенностях войны на Севере на каждом направлении и участке фронта -
+          от самого юга Карелии до голых сопок и скал Заполярья.
+        </p>
+      </div>
+    </div>
+
+    <h1>Экспозиция</h1>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+      {% for exposition in expositions %}
+      <div class="col">
+        <div class="card">
+          <img src="../static/img/upload/{{exposition.image_name}}" class="card-img-top" alt="" />
+          <div class="card-body">
+            <h5 class="card-title"> {{exposition.title}}</h5>
+          </div>
+          <div class="card-body">
+            <a href="/exposition/{{exposition.id}}" class="card-link">Просмотреть</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </main>
+</div>
+{% endblock %}

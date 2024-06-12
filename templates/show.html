@@ -1,0 +1,88 @@
+{% extends 'base.html' %} {% block title %} {{show.title}} {% endblock %} {%
+block main %}
+{{ ckeditor.load() }}
+<div class="container my-3">
+  <main>
+    <ol class="breadcrumb py-3">
+      <li class="breadcrumb-item"><a href="/">Главная</a></li>
+      <li class="breadcrumb-item"><a href="/shows">Выставки</a></li>
+      <li class="breadcrumb-item active">{{show.title}}</li>
+    </ol>
+    {%if 'name' in session and active_user.root==1%}
+    <button
+      type="button"
+      class="btn btn-warning mb-3"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
+      Изменить
+    </button>
+    <a href="/delete-show/{{show.id}}" class="btn btn-danger mb-3">Удалить</a>
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Изменить</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="post" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label for="disabledTextInput" class="form-label">Название</label>
+                <input type="text" id="disabledTextInput" class="form-control" name="title" placeholder="Название"
+                  required value="{{show.title}}">
+              </div>
+              <div class="mb-3">
+                <label for="disabledTextInput" class="form-label">Дата начала</label>
+                <input type="date" id="disabledTextInput" class="form-control" name="date_start" placeholder="Дата начала"
+                  required>
+              </div>
+              <div class="mb-3">
+                <label for="disabledTextInput" class="form-label">Дата окончания</label>
+                <input type="date" id="disabledTextInput" class="form-control" name="date_end" placeholder="Дата окончания"
+                  required>
+              </div>
+              <div class="mb-3">
+                <label for="disabledTextInput" class="form-label">Изображение</label>
+                <input type="file" id="disabledTextInput" name="image" class="form-control" accept=".jpg,.jpeg,.png">
+              </div>
+              <div class="mb-3">
+                <h3>Содержимое</h3>
+                {{ ckeditor.create(value=show.text) }}
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            <button type="submit" class="btn btn-primary">Изменить</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    {%endif%}
+
+    <div class="row row-cols-2">
+      <div class="col">
+        <img
+          src="../static/img/upload/{{show.image_name}}"
+          alt=""
+          class="img-fluid"
+        />
+      </div>
+      <div class="col">
+        <h1>{{show.title}}</h1>
+        <p>
+          <small
+            >{{ show.date_start.strftime('%d.%m.%Y') }} - {{
+            show.date_end.strftime('%d.%m.%Y') }}</small
+          >
+        </p>
+        {% autoescape false %} {{show.text}} {% endautoescape %}
+      </div>
+    </div>
+  </main>
+</div>
+
+{% endblock %}

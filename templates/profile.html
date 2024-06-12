@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% block title %} Профиль {% endblock %} {% block main
+%}
+<div class="container">
+  <div class="row my-5">
+    <div class="col-lg-4">
+      <h1>Профиль</h1>
+    </div>
+
+    <div class="col-lg-8 text-end">
+      <p><b>Имя пользователя:</b> {{active_user.name}}</p>
+      <p><b>Email:</b> {{active_user.email}}</p>
+      <p>
+        <b>Роль:</b> {%if active_user.root==1%} Администратор {%else%}
+        Пользователь {%endif%}
+      </p>
+    </div>
+  </div>
+  <h2>Список заказаных билетов</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Билет</th>
+        <th scope="col">Цена, руб\чел</th>
+        <th scope="col">Дата и время заказа</th>
+        <th scope="col">#</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ticket,order in zip(ticket_list,orders)%}
+      <tr>
+        <td scope="row">{{ticket.title}}</td>
+        <td>{{ticket.price}}</td>
+        <td>{{order.date.strftime('%d.%m.%Y %H:%M')}}</td>
+        <td>
+          <a href="/delete-order/{{order.id}}" class="btn btn-danger"
+            >Удалить</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

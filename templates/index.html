@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+{% block title %}
+Музей Карельского фронта
+{% endblock %}
+
+
+{% block main %}
+
+    <div class="container">
+      <main>
+        <div
+          id="myCarousel"
+          class="carousel slide my-3"
+          data-bs-ride="carousel"
+          bis_skin_checked="1"
+        >
+          <div class="carousel-inner" bis_skin_checked="1">
+            <div class="carousel-item active" bis_skin_checked="1">
+              <img src="../static/img/slider/1.jpg" alt="" class="img-fluid w-100 h-75" />
+              <div class="container" bis_skin_checked="1">
+                <div class="carousel-caption" bis_skin_checked="1">
+                  <h1>Музей Карельского фронта</h1>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item" bis_skin_checked="1">
+              <img src="../static/img/slider/2.jpg" alt="" class="img-fluid w-100" />
+              <div class="container" bis_skin_checked="1">
+                <div class="carousel-caption" bis_skin_checked="1">
+                  <h1>Музей Карельского фронта</h1>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item" bis_skin_checked="1">
+              <img src="../static/img/slider/3.jpg" class="img-fluid w-100" alt="" />
+              <div class="container" bis_skin_checked="1">
+                <div class="carousel-caption" bis_skin_checked="1">
+                  <h1>Музей Карельского фронта</h1>
+                </div>
+              </div>
+            </div>
+
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#myCarousel"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#myCarousel"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+
+        <h2 class="text-center">История музея</h2>
+        <div class="my-5">
+          <div class="row featurette d-flex align-items-center" bis_skin_checked="1">
+            <div class="col-lg-7" bis_skin_checked="1">
+              <p class="lead">
+                Идея о создании музея, посвящённого истории Карельского фронта,
+                была поддержана Государственной комиссией по подготовке к
+                100-летию Карелии и в декабре 2017 года эта инициатива получила
+                одобрение президента России В.В.Путина. Здание, где в годы войны
+                располагался штаб Карельского фронта, было реконструировано с
+                заменой всех инженерных сетей и благоустройством окружающей
+                территории. На завершающем этапе ремонта здания в него вошла
+                команда экспозиционеров, среди которых находились и будущие
+                сотрудники музея.
+              </p>
+            </div>
+            <div class="col-lg-5" bis_skin_checked="1">
+              <img
+                src="../static/img/text_1.jpg"
+                alt=""
+                class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="my-5">
+          <div class="row featurette d-flex align-items-center" bis_skin_checked="1">
+            <div class="col-lg-5" bis_skin_checked="1">
+              <img
+                src="../static/img/text_2.jpg"
+                alt=""
+                class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+              />
+            </div>
+            <div class="col-lg-7" bis_skin_checked="1">
+              <p class="lead">
+                Музей Карельского фронта, филиал Национального музея Республики
+                Карелии, был открыт 30 сентября 2020 года в День освобождения
+                Карелии от фашистских захватчиков. Расположенный в бывшем здании
+                штаба Карельского фронта, первом кирпичном строении города,
+                объекте культурного наследия Карелии, музей рассказывает о всей
+                истории боевых действий на Севере в годы Великой Отечественной
+                войны.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="my-5">
+          <div class="row featurette d-flex align-items-center" bis_skin_checked="1">
+            <div class="col-lg-7" bis_skin_checked="1">
+              <p class="lead">
+                Десять залов основной экспозиции с помощью иммерсивных сюжетных
+                инсталляций и витрин, в которых размещено более 1200 предметов,
+                показывают трагедию 1941 года и Победы 1944 года от Олонца до
+                полуострова Рыбачий, повествуют о трудовом подвиге жителей
+                Карело-Финской ССР и Мурманской области. Завершается рассказ
+                Аллеей Героев Карельского фронта, где представлено более 1300
+                имён и портретов красноармейцев и командиров, воевавших в
+                Карелии и Заполярье.
+              </p>
+            </div>
+            <div class="col-lg-5" bis_skin_checked="1">
+              <img
+                src="../static/img/text_3.jpg"
+                alt=""
+                class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="my-5">
+          <div class="row featurette d-flex align-items-center" bis_skin_checked="1">
+            <div class="col-lg-5" bis_skin_checked="1">
+              <img
+                src="../static/img/text_4.jpg"
+                alt=""
+                class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+              />
+            </div>
+            <div class="col-lg-7" bis_skin_checked="1">
+              <p class="lead">
+                Постоянная экспозиция дополняется оформленной входной зоной и
+                уличной экспозицией, где посетители могут познакомиться с
+                образцами артиллерии, применявшейся в годы Великой Отечественной
+                войны, а также с железобетонными бомбоубежищами, построенными
+                возле штаба фронта в 1943 году.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-between" bis_skin_checked="1">
+          <div>
+            <p>
+                <h2>Контактная информация</h2>
+              <b>Адрес: </b>Республика Карелия, г. Беломорск, ул. Банковская, д.
+              26
+            </p>
+            <p><b>Телефон: </b>(8142) 55-96-60 (доб.165), 8-911-438-84-37</p>
+            <p><b>E-mail: </b>karfront@mail.ru</p>
+            <p>Зав. филиалом: Сергей Юрьевич Кориганов 
+            </p>
+            <p><b>Режим работы:
+                </b>Вторник - воскресенье: 10:00 - 18:00</p>
+          </div>
+          <div>
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/VlT8rmW0MmA?si=6R164IhLiK8WxfJI"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+
+        <div class="my-5">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6861.931637683665!2d34.75982206522922!3d64.53465028313865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x44214f7dff0929fd%3A0x13b45f281bc90c45!2z0JzRg9C30LXQuSDQmtCw0YDQtdC70YzRgdC60L7Qs9C-INCk0YDQvtC90YLQsA!5e0!3m2!1sru!2sby!4v1718062739264!5m2!1sru!2sby" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+        </div>
+
+      </main>
+    </div>
+
+    {% endblock %}

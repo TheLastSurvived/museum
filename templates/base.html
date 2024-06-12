@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../static/css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+      <div class="container-fluid" bis_skin_checked="1">
+        <a class="navbar-brand" href="/">
+          <img src="../static/img/logo.png" class="logo" alt="" />
+          Музей Карельского фронта
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarColor01"
+          aria-controls="navbarColor01"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div
+          class="collapse navbar-collapse"
+          id="navbarColor01"
+          bis_skin_checked="1"
+        >
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/expositions">Экспозиция</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/shows">Выставки</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/tickets">Билеты</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/rules">Правила посещения</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/visitors">Посетителям</a>
+            </li>
+          </ul>
+
+          <ul class="navbar-nav">
+            {%if active_user.root==1 %}
+            <li class="nav-item">
+              <a class="nav-link" href="/admin">Панель администратора</a>
+            </li>
+            {%endif%} {%if 'name' in session and active_user%}
+            <li class="nav-item">
+              <a class="nav-link" href="/profile">Профиль</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Выйти</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Вход</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/reg">Регистрация</a>
+            </li>
+            {%endif%}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container my-3 text-center">
+      {% with messages = get_flashed_messages(True) %} {% if messages %} {% for
+      category, message in messages %}
+      <p class="m-2 flash {{category}}">{{message}}</p>
+      {% endfor %} {% endif %} {% endwith %}
+    </div>
+
+    {% block main %} {% endblock %}
+
+    <footer class="py-3 my-4">
+      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item">
+          <a href="/expositions" class="nav-link px-2 text-body-secondary"
+            >Экспозиция</a
+          >
+        </li>
+        <li class="nav-item">
+          <a href="/shows" class="nav-link px-2 text-body-secondary"
+            >Выставки</a
+          >
+        </li>
+        <li class="nav-item">
+          <a href="/tickets" class="nav-link px-2 text-body-secondary"
+            >Билеты</a
+          >
+        </li>
+        <li class="nav-item">
+          <a href="/rules" class="nav-link px-2 text-body-secondary"
+            >Правила посещения</a
+          >
+        </li>
+
+        <li class="nav-item">
+          <a href="/visitors" class="nav-link px-2 text-body-secondary"
+            >Посетителям</a
+          >
+        </li>
+      </ul>
+      <p class="text-center text-body-secondary">© 2024 GGKTTiD, Inc</p>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
