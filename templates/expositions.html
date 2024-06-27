@@ -8,7 +8,7 @@ main %}
       <li class="breadcrumb-item active">Экспозиция</li>
     </ol>
     
-    {%if 'name' in session and active_user.root==1%}
+    {%if 'admin' in session%}
     <button
       type="button"
       class="btn btn-primary mb-3"
@@ -82,7 +82,8 @@ main %}
       {% for exposition in expositions %}
       <div class="col">
         <div class="card">
-          <img src="../static/img/upload/{{exposition.image_name}}" class="card-img-top" alt="" />
+          <a href="/exposition/{{exposition.id}}">  <img src="../static/img/upload/{{exposition.image_name}}" class="card-img-top" alt="" /></a>
+        
           <div class="card-body">
             <h5 class="card-title"> {{exposition.title}}</h5>
           </div>

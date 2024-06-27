@@ -6,7 +6,7 @@ main %} {{ ckeditor.load() }}
       <li class="breadcrumb-item"><a href="/">Главная</a></li>
       <li class="breadcrumb-item active">Выставки</li>
     </ol>
-    {%if 'name' in session and active_user.root==1%}
+    {%if 'admin' in session%}
     <button
     type="button"
     class="btn btn-primary mb-3"
@@ -70,10 +70,11 @@ main %} {{ ckeditor.load() }}
     {% for show in shows %}
       <div class="col" bis_skin_checked="1">
         <div class="card shadow-sm" bis_skin_checked="1">
-          <img
+          <a href="/show/{{show.id}}"><img
             src="../static/img/upload/{{show.image_name}}"
-            alt=""
-          />
+            alt="" width="100%"
+          /></a>
+        
           <div class="card-body" bis_skin_checked="1">
             <p class="card-text">{{show.title}}</p>
             <div

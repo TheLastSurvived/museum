@@ -9,10 +9,6 @@
     <div class="col-lg-8 text-end">
       <p><b>Имя пользователя:</b> {{active_user.name}}</p>
       <p><b>Email:</b> {{active_user.email}}</p>
-      <p>
-        <b>Роль:</b> {%if active_user.root==1%} Администратор {%else%}
-        Пользователь {%endif%}
-      </p>
     </div>
   </div>
   <h2>Список заказаных билетов</h2>
@@ -32,13 +28,161 @@
         <td>{{ticket.price}}</td>
         <td>{{order.date.strftime('%d.%m.%Y %H:%M')}}</td>
         <td>
+          {%if order.status==0%}
           <a href="/delete-order/{{order.id}}" class="btn btn-danger"
             >Удалить</a
           >
+          {%else%}
+          <p>Оплачен!</p>
+          {%endif%}
         </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
+  {% if orders_list%}
+
+  <button
+    type="button"
+    class="btn btn-primary mb-3"
+    data-bs-toggle="modal"
+    data-bs-target="#exampleModal"
+  >
+    Оплатить
+  </button>
+
+  {% endif %}
+  <h2>Мои чеки</h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Номер карты</th>
+        <th scope="col">Срок действия(месяц/год)</th>
+        <th scope="col">Название билета(билетов)</th>
+        <th scope="col">Дата посещения</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for pay in payments%}
+      <tr>
+        <td scope="row">{{pay.number_cart}}</td>
+        <td>{{pay.date_cart}}</td>
+        <td>{% autoescape false %} {{pay.description}} {% endautoescape %}</td>
+        <td>{{pay.date_visit.strftime('%d.%m.%Y')}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Оплата</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form
+            method="post"
+            enctype="multipart/form-data"
+            action="{{url_for('payment')}}"
+          >
+            <div class="row gy-3" bis_skin_checked="1">
+              <div class="col-md-6" bis_skin_checked="1">
+                <label for="cc-name" class="form-label"
+                  >Фамилия и имя владельца карты</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cc-name"
+                  placeholder="Иванов Иван"
+                  required
+                  min="4"
+                  max="30"
+                  name="name"
+                />
+              </div>
+
+              <div class="col-md-6" bis_skin_checked="1">
+                <label for="cc-number" class="form-label">Номер карты</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cc-number"
+                  placeholder="0000-0000-0000-0000"
+                  required
+                  name="number"
+                  min="16"
+                />
+              </div>
+
+              <div class="col-md-4" bis_skin_checked="1">
+                <label for="cc-expiration" class="form-label"
+                  >Срок действия(месяц/год)</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cc-expiration"
+                  placeholder="01/24"
+                  required
+                  name="date_cart"
+                />
+              </div>
+
+              <div class="col-md-4" bis_skin_checked="1">
+                <label for="cc-cvv" class="form-label">CVV</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cc-cvv"
+                  placeholder="000"
+                  required
+                  name="cvv"
+                />
+              </div>
+
+              <div class="col-md-4" bis_skin_checked="1">
+                <label for="cc-cvv1" class="form-label"
+                  >Выберите дату посещения</label
+                >
+                <input
+                  type="date"
+                  class="form-control"
+                  id="cc-cvv1"
+                  placeholder="000"
+                  required
+                  name="date_visit"
+                />
+              </div>
+            </div>
+            <div class="modal-footer my-3">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Закрыть
+              </button>
+              <button type="submit" class="btn btn-primary">Оплатить</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
 </div>
-{% endblock %}

@@ -9,7 +9,7 @@ endblock %} {% block main %}
       <li class="breadcrumb-item"><a href="/expositions">Экспозиция</a> </li>
       <li class="breadcrumb-item active">{{exposition.title}}</li>
     </ol>
-    {%if 'name' in session and active_user.root==1%}
+    {%if 'admin' in session%}
     <button
       type="button"
       class="btn btn-warning mb-3"

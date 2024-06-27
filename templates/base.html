@@ -8,6 +8,20 @@
     <link rel="stylesheet" href="../static/css/style.css" />
   </head>
   <body>
+    {%if 'admin' in session%}
+    <div class="d-flex bg-light justify-content-center">
+      <small class=""
+        ><a class="text-decoration-none" href="/admin"
+          >Панель администратора</a
+        ></small
+      >
+      <small class="mx-5"
+        ><a class="text-decoration-none" href="/admin_logout"
+          >Завершить сеанс администратора</a
+        ></small
+      >
+    </div>
+    {%endif%}
     <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
       <div class="container-fluid" bis_skin_checked="1">
         <a class="navbar-brand" href="/">
@@ -126,5 +140,7 @@
       integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
       crossorigin="anonymous"
     ></script>
+    <script src="https://unpkg.com/imask"></script>
+    <script src="../static/index.js"></script>
   </body>
 </html>

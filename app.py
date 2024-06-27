@@ -68,26 +68,52 @@ class Orders(db.Model):
     id_user = db.Column(db.Integer, db.ForeignKey('users.id'))
     id_ticket = db.Column(db.Integer, db.ForeignKey('tickets.id'))
     date = db.Column(db.DateTime, default=datetime.now)
+    status = db.Column(db.Integer, default=0)
 
 
     def __repr__(self):
         return 'Orders %r' % self.id 
+    
+class Payment(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    date_visit = db.Column(db.DateTime)
+    name_cart = db.Column(db.String(100))
+    number_cart = db.Column(db.String(100))
+    date_cart = db.Column(db.String(100))
+    cvv_cart = db.Column(db.String(100))
+    id_user = db.Column(db.Integer, db.ForeignKey('users.id'))
+    description = db.Column(db.Text)
+
+    def __repr__(self):
+        return 'Payment %r' % self.id 
 
 
 class AdminIndex(AdminIndexView):
     @expose('/', methods=['GET', 'POST'])
     def index(self):
-        if 'name' in session:
-            user = Users.query.filter_by(email=session['name']).first()
+        if request.method == 'POST':
+            email = request.form.get('email')
+            password = md5(request.form.get('password').encode()).hexdigest()
+           
+            user = Users.query.filter_by(email=email,password=password).first()
+            
+            if user:
+                session['admin'] = Users.query.filter_by(email=email).first().email
+                return self.render('admin/dashboard_index.html')
+            else:
+                flash("Неправильная почта или пароль!", category="bad")
+                return redirect(url_for("admin.index"))
+        if 'admin' in session:
+            user = Users.query.filter_by(email=session['admin']).first()
             if user.root!=1:
-                abort(403)
+                return self.render('admin/admin_login.html')
             else:
                 return self.render('admin/dashboard_index.html')
         else:
-            abort(401)
+            return self.render('admin/admin_login.html')
 
 
-admin = Admin(app, name='Музей',index_view=AdminIndex())
+admin = Admin(app, name='Музей',index_view=AdminIndex(), template_mode='bootstrap4')
 
 
 class OrdersView(ModelView):
@@ -102,6 +128,51 @@ admin.add_view(ModelView(Shows, db.session))
 admin.add_view(ModelView(Tickets, db.session))
 admin.add_view(OrdersView(Orders, db.session))
     
+@app.route('/admin_logout')
+def admin_logout():
+    session.pop('admin', None)
+    return redirect('/')   
+
+@app.route('/payment', methods=['GET', 'POST'])
+def payment():
+    total_user = Users.query.filter_by(email=session['name']).first()
+    if request.method == 'POST':
+        name = request.form.get('name')
+        number = request.form.get('number')
+        date_cart = request.form.get('date_cart')
+        cvv = request.form.get('cvv')
+        date_visit = datetime.strptime(request.form['date_visit'],'%Y-%m-%d')
+        flash("ОПЛАЧЕНО!", category="ok")
+        
+        total_user = Users.query.filter_by(email=session['name']).first()
+        orders = Orders.query.filter_by(id_user=total_user.id).all()
+        id_list = []
+        ticket_list = []
+        
+        description = ''
+        
+        for order in orders:
+            id_list.append(order.id_ticket)
+
+        for el in id_list:
+            ticket_list.append(Tickets.query.filter_by(id=el).first())
+            
+        for el in ticket_list:
+            order = Orders.query.filter_by(id_ticket=el.id, id_user=total_user.id).first()
+            if not order.status  == 1:
+                description += el.title + "<br>"
+            
+        for el in orders:
+            el.status = 1
+            db.session.commit()
+            
+        pay = Payment(name_cart=name, number_cart=number, date_cart=date_cart, cvv_cart=cvv, date_visit=date_visit, id_user=total_user.id, description=description)
+        db.session.add(pay)
+        db.session.commit()
+
+    return redirect(url_for('profile'))
+
+    
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return render_template("index.html")
@@ -113,15 +184,23 @@ def profile():
         
     total_user = Users.query.filter_by(email=session['name']).first()
     orders = Orders.query.filter_by(id_user=total_user.id).all()
+    payments = Payment.query.filter_by(id_user=total_user.id).all()
     id_list = []
     ticket_list = []
+    orders_list = []
 
     for order in orders:
         id_list.append(order.id_ticket)
 
     for el in id_list:
         ticket_list.append(Tickets.query.filter_by(id=el).first())
-    return render_template("profile.html",ticket_list=ticket_list,orders=orders,zip=zip)
+        
+    for el in ticket_list:
+        order = Orders.query.filter_by(id_ticket=el.id, id_user=total_user.id).first()
+        if order.status  == 0:    
+            orders_list.append(order)
+    print(orders_list)
+    return render_template("profile.html",ticket_list=ticket_list,orders=orders,zip=zip,payments=payments,orders_list=orders_list)
 
 @app.route('/rules', methods=['GET', 'POST'])
 def rules():
@@ -324,6 +403,8 @@ def inject_user():
         if 'name' in session:
             return Users.query.filter_by(email=session['name']).first()
     return dict(active_user=get_user_name())
+
+
 
 
 @app.errorhandler(404)
